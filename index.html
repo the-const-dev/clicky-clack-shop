@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>KEYBOARD HUB</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#0d1117;
+  color:#f3f4f6;
+  overflow-x:hidden;
+}
+
+/* ---------- BACKGROUND ---------- */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  background:
+  radial-gradient(circle at top left, rgba(99,102,241,0.12), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(16,185,129,0.10), transparent 30%);
+
+  z-index:-1;
+}
+
+/* ---------- HEADER ---------- */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:20px 50px;
+
+  backdrop-filter:blur(14px);
+
+  background:rgba(13,17,23,0.72);
+
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+  font-size:32px;
+  font-weight:700;
+  letter-spacing:2px;
+
+  background:linear-gradient(90deg,#8b5cf6,#34d399);
+
+  background-clip:text;
+  -webkit-background-clip:text;
+
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+
+.top-actions{
+  display:flex;
+  gap:14px;
+}
+
+.action-btn{
+  background:#171b24;
+
+  border:1px solid rgba(255,255,255,0.05);
+
+  padding:12px 18px;
+
+  border-radius:16px;
+
+  color:white;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+.action-btn:hover{
+  transform:translateY(-2px);
+  background:#1f2430;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  text-align:center;
+  padding:100px 20px 70px;
+}
+
+.hero h1{
+  font-size:70px;
+  margin-bottom:20px;
+
+  background:linear-gradient(90deg,#c4b5fd,#6ee7b7);
+
+  background-clip:text;
+  -webkit-background-clip:text;
+
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  max-width:850px;
+  margin:auto;
+
+  color:#9ca3af;
+
+  line-height:1.8;
+  font-size:18px;
+}
+
+/* ---------- STATS ---------- */
+
+.stats{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+
+  gap:20px;
+
+  padding:20px 40px;
+}
+
+.stat-card{
+  width:240px;
+
+  background:#151922;
+
+  border-radius:24px;
+
+  padding:30px;
+
+  border:1px solid rgba(255,255,255,0.05);
+
+  transition:0.3s;
+}
+
+.stat-card:hover{
+  transform:translateY(-5px);
+}
+
+.stat-card h2{
+  font-size:38px;
+  margin-bottom:10px;
+
+  color:#a78bfa;
+}
+
+.stat-card p{
+  color:#9ca3af;
+}
+
+/* ---------- FILTERS ---------- */
+
+.controls{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+
+  gap:15px;
+
+  padding:40px 20px;
+}
+
+.controls input,
+.controls select{
+  min-width:220px;
+
+  padding:15px;
+
+  border:none;
+  outline:none;
+
+  border-radius:16px;
+
+  background:#151922;
+
+  color:white;
+
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+/* ---------- CATALOG ---------- */
+
+.catalog{
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+  gap:28px;
+
+  padding:20px 50px 100px;
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+  background:#151922;
+
+  border-radius:28px;
+
+  overflow:hidden;
+
+  position:relative;
+
+  border:1px solid rgba(255,255,255,0.05);
+
+  transition:0.35s ease;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.35);
+}
+
+.card img{
+  width:100%;
+  height:240px;
+
+  object-fit:cover;
+
+  transition:0.5s;
+}
+
+.card:hover img{
+  transform:scale(1.03);
+}
+
+.badge{
+  position:absolute;
+
+  top:15px;
+  right:15px;
+
+  background:#10b981;
+
+  color:white;
+
+  padding:8px 14px;
+
+  border-radius:999px;
+
+  font-size:12px;
+  font-weight:bold;
+}
+
+.card-content{
+  padding:24px;
+}
+
+.category{
+  color:#6ee7b7;
+
+  margin-bottom:10px;
+
+  font-size:14px;
+}
+
+.card h3{
+  font-size:28px;
+  margin-bottom:12px;
+}
+
+.desc{
+  color:#9ca3af;
+
+  line-height:1.7;
+
+  margin-bottom:18px;
+}
+
+.price{
+  font-size:32px;
+  font-weight:700;
+
+  margin-bottom:20px;
+
+  color:#c4b5fd;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.buttons{
+  display:flex;
+  gap:12px;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.buy{
+  flex:1;
+
+  padding:15px;
+
+  border-radius:16px;
+
+  background:linear-gradient(90deg,#6366f1,#8b5cf6);
+
+  color:white;
+
+  font-weight:600;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.buy:hover{
+  transform:translateY(-2px);
+}
+
+.buy.added{
+  background:linear-gradient(90deg,#10b981,#059669);
+}
+
+.buy.added::after{
+  content:"✓ Добавлено";
+
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:linear-gradient(90deg,#10b981,#059669);
+
+  animation:fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+.fav{
+  width:58px;
+
+  border-radius:16px;
+
+  background:#202531;
+
+  color:white;
+
+  font-size:18px;
+}
+
+.fav.active{
+  background:#ef4444;
+}
+
+/* ---------- CART ---------- */
+
+.cart-sidebar{
+  position:fixed;
+
+  top:0;
+  right:-420px;
+
+  width:400px;
+  height:100vh;
+
+  background:#10141d;
+
+  border-left:1px solid rgba(255,255,255,0.05);
+
+  z-index:2000;
+
+  transition:0.4s ease;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-sidebar.active{
+  right:0;
+}
+
+.cart-header{
+  padding:25px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.cart-items{
+  flex:1;
+
+  overflow:auto;
+
+  padding:20px;
+}
+
+.cart-item{
+  display:flex;
+  gap:14px;
+
+  background:#171b24;
+
+  padding:12px;
+
+  border-radius:18px;
+
+  margin-bottom:14px;
+}
+
+.cart-item img{
+  width:80px;
+  height:80px;
+
+  object-fit:cover;
+
+  border-radius:12px;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.cart-item-info h4{
+  margin-bottom:8px;
+}
+
+.cart-item-info p{
+  color:#9ca3af;
+  margin-bottom:10px;
+}
+
+.remove-btn{
+  background:#ef4444;
+
+  color:white;
+
+  padding:8px 12px;
+
+  border-radius:10px;
+}
+
+.cart-footer{
+  padding:25px;
+
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.checkout{
+  width:100%;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  background:linear-gradient(90deg,#10b981,#059669);
+
+  color:white;
+
+  font-size:16px;
+  font-weight:600;
+}
+
+.empty{
+  text-align:center;
+  color:#6b7280;
+  margin-top:40px;
+}
+
+/* ---------- TOAST ---------- */
+
+.toast{
+  position:fixed;
+
+  bottom:30px;
+  right:30px;
+
+  background:#10b981;
+
+  color:white;
+
+  padding:16px 22px;
+
+  border-radius:16px;
+
+  font-weight:600;
+
+  transform:translateY(100px);
+
+  opacity:0;
+
+  transition:0.4s ease;
+
+  z-index:3000;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer{
+  text-align:center;
+
+  padding:40px;
+
+  color:#6b7280;
+
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:900px){
+
+  header{
+    padding:20px;
+  }
+
+  .catalog{
+    padding:20px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  header{
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .hero{
+    padding-top:70px;
+  }
+
+  .hero h1{
+    font-size:42px;
+    line-height:1.2;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .stats{
+    padding:20px;
+  }
+
+  .stat-card{
+    width:100%;
+  }
+
+  .controls{
+    padding:25px 20px;
+  }
+
+  .controls input,
+  .controls select{
+    width:100%;
+  }
+
+  .catalog{
+    grid-template-columns:1fr;
+  }
+
+  .card h3{
+    font-size:24px;
+  }
+
+  .price{
+    font-size:28px;
+  }
+
+  .cart-sidebar{
+    width:100%;
+  }
+
+  .top-actions{
+    width:100%;
+  }
+
+  .action-btn{
+    flex:1;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+  <div class="logo">
+    KEYBOARD HUB
+  </div>
+
+  <div class="top-actions">
+
+    <button class="action-btn">
+      ❤️ <span id="favCount">0</span>
+    </button>
+
+    <button class="action-btn" onclick="toggleCart()">
+      🛒 <span id="cartCount">0</span>
+    </button>
+
+  </div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <h1>Custom Keyboard Store</h1>
+
+  <p>
+    Премиальные механические клавиатуры с hot-swap,
+    RGB-подсветкой, алюминиевыми корпусами
+    и современным минималистичным дизайном.
+  </p>
+
+</section>
+
+<!-- STATS -->
+
+<section class="stats">
+
+  <div class="stat-card">
+    <h2 id="productCount">0</h2>
+    <p>Моделей в каталоге</p>
+  </div>
+
+  <div class="stat-card">
+    <h2 id="totalPrice">$0</h2>
+    <p>Сумма корзины</p>
+  </div>
+
+  <div class="stat-card">
+    <h2>RGB</h2>
+    <p>Premium Collection</p>
+  </div>
+
+</section>
+
+<!-- FILTERS -->
+
+<section class="controls">
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Поиск клавиатуры..."
+  >
+
+  <select id="categoryFilter">
+
+    <option value="all">Все категории</option>
+    <option value="65%">65%</option>
+    <option value="75%">75%</option>
+    <option value="TKL">TKL</option>
+    <option value="Full Size">Full Size</option>
+
+  </select>
+
+  <select id="sortPrice">
+
+    <option value="default">Сортировка</option>
+    <option value="low">Цена: дешевле</option>
+    <option value="high">Цена: дороже</option>
+
+  </select>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<section class="catalog" id="catalog"></section>
+
+<!-- CART -->
+
+<div class="cart-sidebar" id="cartSidebar">
+
+  <div class="cart-header">
+
+    <h2>Корзина</h2>
+
+    <button class="remove-btn" onclick="toggleCart()">
+      ✕
+    </button>
+
+  </div>
+
+  <div class="cart-items" id="cartItems">
+
+    <div class="empty">
+      Корзина пуста
+    </div>
+
+  </div>
+
+  <div class="cart-footer">
+
+    <h3 style="margin-bottom:15px;">
+      Итого:
+      <span id="cartTotal">$0</span>
+    </h3>
+
+    <button class="checkout">
+      Оформить заказ
+    </button>
+
+  </div>
+
+</div>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+  Товар добавлен в корзину
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  KEYBOARD HUB © 2026 — Premium Mechanical Keyboards
+</footer>
+
+<script>
+
+/* ---------- PRODUCTS ---------- */
+
+const products = [
+
+  {
+    id:1,
+    title:"Nebula 65",
+    category:"65%",
+    price:220,
+    image:"https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=1200",
+    desc:"Компактная алюминиевая клавиатура с RGB.",
+    hot:true
+  },
+
+  {
+    id:2,
+    title:"Aurora TKL",
+    category:"TKL",
+    price:310,
+    image:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200",
+    desc:"Hot-swap клавиатура с шумоизоляцией.",
+    hot:true
+  },
+
+  {
+    id:3,
+    title:"Phantom 75",
+    category:"75%",
+    price:280,
+    image:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1200",
+    desc:"Минималистичный дизайн и Kailh Switches.",
+    hot:false
+  },
+
+  {
+    id:4,
+    title:"Titan Full",
+    category:"Full Size",
+    price:340,
+    image:"https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1200",
+    desc:"Полноразмерная клавиатура для работы и игр.",
+    hot:false
+  },
+
+  {
+    id:5,
+    title:"Cyber 65 Pro",
+    category:"65%",
+    price:420,
+    image:"https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=1200",
+    desc:"OLED дисплей и premium кейкапы.",
+    hot:true
+  },
+
+  {
+    id:6,
+    title:"Retro Board",
+    category:"TKL",
+    price:190,
+    image:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=1200",
+    desc:"Винтажный стиль и современные свитчи.",
+    hot:false
+  }
+
+];
+
+/* ---------- VARIABLES ---------- */
+
+let cart = [];
+let favorites = [];
+
+/* ---------- ELEMENTS ---------- */
+
+const catalog = document.getElementById("catalog");
+const cartSidebar = document.getElementById("cartSidebar");
+const cartItems = document.getElementById("cartItems");
+const toast = document.getElementById("toast");
+
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const sortPrice = document.getElementById("sortPrice");
+
+/* ---------- RENDER PRODUCTS ---------- */
+
+function renderProducts(){
+
+  let filtered = [...products];
+
+  filtered = filtered.filter(product =>
+    product.title.toLowerCase()
+    .includes(searchInput.value.toLowerCase())
+  );
+
+  if(categoryFilter.value !== "all"){
+
+    filtered = filtered.filter(product =>
+      product.category === categoryFilter.value
+    );
+
+  }
+
+  if(sortPrice.value === "low"){
+    filtered.sort((a,b)=>a.price-b.price);
+  }
+
+  if(sortPrice.value === "high"){
+    filtered.sort((a,b)=>b.price-a.price);
+  }
+
+  catalog.innerHTML = "";
+
+  filtered.forEach(product => {
+
+    const isFav = favorites.includes(product.id);
+
+    catalog.innerHTML += `
+
+      <div class="card">
+
+        ${product.hot ? `<div class="badge">HOT</div>` : ""}
+
+        <img src="${product.image}" alt="${product.title}">
+
+        <div class="card-content">
+
+          <div class="category">
+            ${product.category}
+          </div>
+
+          <h3>${product.title}</h3>
+
+          <div class="desc">
+            ${product.desc}
+          </div>
+
+          <div class="price">
+            $${product.price}
+          </div>
+
+          <div class="buttons">
+
+            <button
+              class="buy"
+              id="buy-${product.id}"
+              onclick="addToCart(${product.id})"
+            >
+              Добавить
+            </button>
+
+            <button
+              class="fav ${isFav ? 'active' : ''}"
+              onclick="toggleFavorite(${product.id})"
+            >
+              ❤️
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  document.getElementById("productCount").innerText =
+    filtered.length;
+
+}
+
+/* ---------- FAVORITES ---------- */
+
+function toggleFavorite(id){
+
+  if(favorites.includes(id)){
+
+    favorites = favorites.filter(f => f !== id);
+
+  } else {
+
+    favorites.push(id);
+
+  }
+
+  document.getElementById("favCount").innerText =
+    favorites.length;
+
+  renderProducts();
+
+}
+
+/* ---------- TOAST ---------- */
+
+function showToast(){
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+
+}
+
+/* ---------- CART ---------- */
+
+function addToCart(id){
+
+  const product = products.find(p => p.id === id);
+
+  cart.push(product);
+
+  updateCart();
+
+  showToast();
+
+  /* BUTTON EFFECT */
+
+  const btn = document.getElementById(`buy-${id}`);
+
+  btn.classList.add("added");
+
+  setTimeout(() => {
+    btn.classList.remove("added");
+  }, 1400);
+
+}
+
+function removeFromCart(index){
+
+  cart.splice(index,1);
+
+  updateCart();
+
+}
+
+function updateCart(){
+
+  document.getElementById("cartCount").innerText =
+    cart.length;
+
+  const total = cart.reduce((sum,item)=>
+    sum + item.price,0);
+
+  document.getElementById("cartTotal").innerText =
+    "$" + total;
+
+  document.getElementById("totalPrice").innerText =
+    "$" + total;
+
+  if(cart.length === 0){
+
+    cartItems.innerHTML = `
+      <div class="empty">
+        Корзина пуста
+      </div>
+    `;
+
+    return;
+  }
+
+  cartItems.innerHTML = "";
+
+  cart.forEach((item,index)=>{
+
+    cartItems.innerHTML += `
+
+      <div class="cart-item">
+
+        <img src="${item.image}">
+
+        <div class="cart-item-info">
+
+          <h4>${item.title}</h4>
+
+          <p>$${item.price}</p>
+
+          <button
+            class="remove-btn"
+            onclick="removeFromCart(${index})"
+          >
+            Удалить
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+function toggleCart(){
+
+  cartSidebar.classList.toggle("active");
+
+}
+
+/* ---------- EVENTS ---------- */
+
+searchInput.addEventListener("input", renderProducts);
+
+categoryFilter.addEventListener("change", renderProducts);
+
+sortPrice.addEventListener("change", renderProducts);
+
+/* ---------- INIT ---------- */
+
+renderProducts();
+
+</script>
+
+</body>
+</html>
