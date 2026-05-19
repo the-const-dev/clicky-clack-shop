@@ -290,7 +290,7 @@ header{
 }
 
 .price{
-  font-size:32px;
+  font-size:30px;
   font-weight:700;
 
   margin-bottom:20px;
@@ -348,17 +348,6 @@ button{
   align-items:center;
 
   background:linear-gradient(90deg,#10b981,#059669);
-
-  animation:fadeIn 0.25s ease;
-}
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-  }
-  to{
-    opacity:1;
-  }
 }
 
 .fav{
@@ -377,9 +366,9 @@ button{
   background:#ef4444;
 }
 
-/* ---------- CART ---------- */
+/* ---------- SIDEBARS ---------- */
 
-.cart-sidebar{
+.sidebar{
   position:fixed;
 
   top:0;
@@ -400,11 +389,11 @@ button{
   flex-direction:column;
 }
 
-.cart-sidebar.active{
+.sidebar.active{
   right:0;
 }
 
-.cart-header{
+.sidebar-header{
   padding:25px;
 
   display:flex;
@@ -414,7 +403,7 @@ button{
   border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
-.cart-items{
+.sidebar-items{
   flex:1;
 
   overflow:auto;
@@ -422,7 +411,7 @@ button{
   padding:20px;
 }
 
-.cart-item{
+.sidebar-item{
   display:flex;
   gap:14px;
 
@@ -435,7 +424,7 @@ button{
   margin-bottom:14px;
 }
 
-.cart-item img{
+.sidebar-item img{
   width:80px;
   height:80px;
 
@@ -444,15 +433,15 @@ button{
   border-radius:12px;
 }
 
-.cart-item-info{
+.sidebar-info{
   flex:1;
 }
 
-.cart-item-info h4{
+.sidebar-info h4{
   margin-bottom:8px;
 }
 
-.cart-item-info p{
+.sidebar-info p{
   color:#9ca3af;
   margin-bottom:10px;
 }
@@ -467,7 +456,7 @@ button{
   border-radius:10px;
 }
 
-.cart-footer{
+.sidebar-footer{
   padding:25px;
 
   border-top:1px solid rgba(255,255,255,0.05);
@@ -540,23 +529,12 @@ footer{
 
 /* ---------- MOBILE ---------- */
 
-@media(max-width:900px){
-
-  header{
-    padding:20px;
-  }
-
-  .catalog{
-    padding:20px;
-  }
-
-}
-
 @media(max-width:768px){
 
   header{
     flex-direction:column;
     gap:18px;
+    padding:20px;
   }
 
   .hero{
@@ -591,17 +569,10 @@ footer{
 
   .catalog{
     grid-template-columns:1fr;
+    padding:20px;
   }
 
-  .card h3{
-    font-size:24px;
-  }
-
-  .price{
-    font-size:28px;
-  }
-
-  .cart-sidebar{
+  .sidebar{
     width:100%;
   }
 
@@ -620,8 +591,6 @@ footer{
 
 <body>
 
-<!-- HEADER -->
-
 <header>
 
   <div class="logo">
@@ -630,7 +599,7 @@ footer{
 
   <div class="top-actions">
 
-    <button class="action-btn">
+    <button class="action-btn" onclick="toggleFavorites()">
       ❤️ <span id="favCount">0</span>
     </button>
 
@@ -641,8 +610,6 @@ footer{
   </div>
 
 </header>
-
-<!-- HERO -->
 
 <section class="hero">
 
@@ -656,8 +623,6 @@ footer{
 
 </section>
 
-<!-- STATS -->
-
 <section class="stats">
 
   <div class="stat-card">
@@ -666,7 +631,7 @@ footer{
   </div>
 
   <div class="stat-card">
-    <h2 id="totalPrice">$0</h2>
+    <h2 id="totalPrice">0 ₽</h2>
     <p>Сумма корзины</p>
   </div>
 
@@ -676,8 +641,6 @@ footer{
   </div>
 
 </section>
-
-<!-- FILTERS -->
 
 <section class="controls">
 
@@ -707,15 +670,13 @@ footer{
 
 </section>
 
-<!-- PRODUCTS -->
-
 <section class="catalog" id="catalog"></section>
 
 <!-- CART -->
 
-<div class="cart-sidebar" id="cartSidebar">
+<div class="sidebar" id="cartSidebar">
 
-  <div class="cart-header">
+  <div class="sidebar-header">
 
     <h2>Корзина</h2>
 
@@ -725,19 +686,13 @@ footer{
 
   </div>
 
-  <div class="cart-items" id="cartItems">
+  <div class="sidebar-items" id="cartItems"></div>
 
-    <div class="empty">
-      Корзина пуста
-    </div>
-
-  </div>
-
-  <div class="cart-footer">
+  <div class="sidebar-footer">
 
     <h3 style="margin-bottom:15px;">
       Итого:
-      <span id="cartTotal">$0</span>
+      <span id="cartTotal">0 ₽</span>
     </h3>
 
     <button class="checkout">
@@ -748,13 +703,29 @@ footer{
 
 </div>
 
+<!-- FAVORITES -->
+
+<div class="sidebar" id="favSidebar">
+
+  <div class="sidebar-header">
+
+    <h2>Избранное</h2>
+
+    <button class="remove-btn" onclick="toggleFavorites()">
+      ✕
+    </button>
+
+  </div>
+
+  <div class="sidebar-items" id="favItems"></div>
+
+</div>
+
 <!-- TOAST -->
 
 <div class="toast" id="toast">
   Товар добавлен в корзину
 </div>
-
-<!-- FOOTER -->
 
 <footer>
   KEYBOARD HUB © 2026 — Premium Mechanical Keyboards
@@ -770,7 +741,7 @@ const products = [
     id:1,
     title:"Nebula 65",
     category:"65%",
-    price:220,
+    price:18990,
     image:"https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=1200",
     desc:"Компактная алюминиевая клавиатура с RGB.",
     hot:true
@@ -780,7 +751,7 @@ const products = [
     id:2,
     title:"Aurora TKL",
     category:"TKL",
-    price:310,
+    price:24990,
     image:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200",
     desc:"Hot-swap клавиатура с шумоизоляцией.",
     hot:true
@@ -790,7 +761,7 @@ const products = [
     id:3,
     title:"Phantom 75",
     category:"75%",
-    price:280,
+    price:21990,
     image:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1200",
     desc:"Минималистичный дизайн и Kailh Switches.",
     hot:false
@@ -800,7 +771,7 @@ const products = [
     id:4,
     title:"Titan Full",
     category:"Full Size",
-    price:340,
+    price:27990,
     image:"https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1200",
     desc:"Полноразмерная клавиатура для работы и игр.",
     hot:false
@@ -810,7 +781,7 @@ const products = [
     id:5,
     title:"Cyber 65 Pro",
     category:"65%",
-    price:420,
+    price:34990,
     image:"https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=1200",
     desc:"OLED дисплей и premium кейкапы.",
     hot:true
@@ -820,10 +791,40 @@ const products = [
     id:6,
     title:"Retro Board",
     category:"TKL",
-    price:190,
+    price:16990,
     image:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=1200",
     desc:"Винтажный стиль и современные свитчи.",
     hot:false
+  },
+
+  {
+    id:7,
+    title:"Arctic 75",
+    category:"75%",
+    price:23990,
+    image:"https://images.unsplash.com/photo-1541140532154-b024d705b90a?q=80&w=1200",
+    desc:"Белый алюминиевый корпус и тихие свитчи.",
+    hot:true
+  },
+
+  {
+    id:8,
+    title:"Shadow TKL",
+    category:"TKL",
+    price:28990,
+    image:"https://images.unsplash.com/photo-1517336714739-489689fd1ca8?q=80&w=1200",
+    desc:"Матовый корпус и premium RGB подсветка.",
+    hot:false
+  },
+
+  {
+    id:9,
+    title:"Nova Full",
+    category:"Full Size",
+    price:31990,
+    image:"https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1200",
+    desc:"Максимальный комфорт для работы и игр.",
+    hot:true
   }
 
 ];
@@ -837,12 +838,22 @@ let favorites = [];
 
 const catalog = document.getElementById("catalog");
 const cartSidebar = document.getElementById("cartSidebar");
+const favSidebar = document.getElementById("favSidebar");
+
 const cartItems = document.getElementById("cartItems");
+const favItems = document.getElementById("favItems");
+
 const toast = document.getElementById("toast");
 
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
 const sortPrice = document.getElementById("sortPrice");
+
+/* ---------- FORMAT ---------- */
+
+function formatPrice(price){
+  return price.toLocaleString("ru-RU") + " ₽";
+}
 
 /* ---------- RENDER PRODUCTS ---------- */
 
@@ -898,7 +909,7 @@ function renderProducts(){
           </div>
 
           <div class="price">
-            $${product.price}
+            ${formatPrice(product.price)}
           </div>
 
           <div class="buttons">
@@ -950,7 +961,57 @@ function toggleFavorite(id){
   document.getElementById("favCount").innerText =
     favorites.length;
 
+  renderFavorites();
+
   renderProducts();
+
+}
+
+function renderFavorites(){
+
+  if(favorites.length === 0){
+
+    favItems.innerHTML = `
+      <div class="empty">
+        Нет избранных товаров
+      </div>
+    `;
+
+    return;
+  }
+
+  favItems.innerHTML = "";
+
+  favorites.forEach(id => {
+
+    const item = products.find(p => p.id === id);
+
+    favItems.innerHTML += `
+
+      <div class="sidebar-item">
+
+        <img src="${item.image}">
+
+        <div class="sidebar-info">
+
+          <h4>${item.title}</h4>
+
+          <p>${formatPrice(item.price)}</p>
+
+          <button
+            class="remove-btn"
+            onclick="toggleFavorite(${item.id})"
+          >
+            Удалить
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
 
 }
 
@@ -977,8 +1038,6 @@ function addToCart(id){
   updateCart();
 
   showToast();
-
-  /* BUTTON EFFECT */
 
   const btn = document.getElementById(`buy-${id}`);
 
@@ -1007,10 +1066,10 @@ function updateCart(){
     sum + item.price,0);
 
   document.getElementById("cartTotal").innerText =
-    "$" + total;
+    formatPrice(total);
 
   document.getElementById("totalPrice").innerText =
-    "$" + total;
+    formatPrice(total);
 
   if(cart.length === 0){
 
@@ -1029,15 +1088,15 @@ function updateCart(){
 
     cartItems.innerHTML += `
 
-      <div class="cart-item">
+      <div class="sidebar-item">
 
         <img src="${item.image}">
 
-        <div class="cart-item-info">
+        <div class="sidebar-info">
 
           <h4>${item.title}</h4>
 
-          <p>$${item.price}</p>
+          <p>${formatPrice(item.price)}</p>
 
           <button
             class="remove-btn"
@@ -1056,9 +1115,21 @@ function updateCart(){
 
 }
 
+/* ---------- SIDEBARS ---------- */
+
 function toggleCart(){
 
   cartSidebar.classList.toggle("active");
+
+  favSidebar.classList.remove("active");
+
+}
+
+function toggleFavorites(){
+
+  favSidebar.classList.toggle("active");
+
+  cartSidebar.classList.remove("active");
 
 }
 
@@ -1073,6 +1144,7 @@ sortPrice.addEventListener("change", renderProducts);
 /* ---------- INIT ---------- */
 
 renderProducts();
+renderFavorites();
 
 </script>
 
